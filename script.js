@@ -26,14 +26,19 @@ let selectedDay=(()=>{
   return n===0?"понедельник":daysOrder[n-1] || "понедельник";
 })();
 
+let selectedWeek=getAutoWeek();
+
 function render(){
-  const week=getAutoWeek();
+  const week=selectedWeek;
   document.getElementById("weekName").textContent=week==="upper"?"Верхняя":"Нижняя";
   const now=new Date();
   document.getElementById("dateText").textContent=now.toLocaleDateString("ru-RU",{day:"numeric",month:"long",year:"numeric"});
 
   document.querySelectorAll("#daySelector button").forEach(btn=>{
     btn.classList.toggle("active",btn.dataset.day===selectedDay);
+  });
+  document.querySelectorAll("#weekSwitch button").forEach(btn=>{
+    btn.classList.toggle("active",btn.dataset.week===selectedWeek);
   });
 
   const root=document.getElementById("schedule");
@@ -44,23 +49,16 @@ function render(){
   dayEl.innerHTML=`<div class="day-title"><h2>${pretty[selectedDay]}</h2><span>${slots.length} пар</span></div>`;
 
   slots.forEach(slot=>{
-    const key=week;
-    const other=week==="upper"?"lower":"upper";
-    const main=splitSubject(slot[key]);
-    const alt=splitSubject(slot[other]);
-    const hasMain=!!slot[key] && slot[key]!=="----";
-    const hasAlt=!!slot[other] && slot[other]!=="----";
+    const value=slot[week];
+    const lesson=splitSubject(value);
+    const hasLesson=!!value && value!=="----";
     const card=document.createElement("article");
     card.className="card";
     let out=`<div class="time">${escapeHtml(slot.time)}</div>`;
-    if(hasMain){
-      out+=`<div class="lesson"><div class="tag ${key}">${key==="upper"?"Верхняя":"Нижняя"}</div><div class="lesson-name">${escapeHtml(main.name)}</div>${main.info?`<div class="lesson-info">${escapeHtml(main.info)}</div>`:""}</div>`;
+    if(hasLesson){
+      out+=`<div class="lesson"><div class="tag ${week}">${week==="upper"?"Верхняя":"Нижняя"}</div><div class="lesson-name">${escapeHtml(lesson.name)}</div>${lesson.info?`<div class="lesson-info">${escapeHtml(lesson.info)}</div>`:""}</div>`;
     }else{
       out+=`<div class="lesson empty">Нет занятий</div>`;
-    }
-    if(hasAlt){
-      card.classList.add("split");
-      out+=`<div class="lesson"><div class="tag ${other}">${other==="upper"?"Верхняя":"Нижняя"}</div><div class="lesson-name">${escapeHtml(alt.name)}</div>${alt.info?`<div class="lesson-info">${escapeHtml(alt.info)}</div>`:""}</div>`;
     }
     card.innerHTML=out;
     dayEl.appendChild(card);
@@ -71,6 +69,14 @@ function render(){
 document.querySelectorAll("#daySelector button").forEach(btn=>{
   btn.addEventListener("click",()=>{
     selectedDay=btn.dataset.day;
+    render();
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+});
+
+document.querySelectorAll("#weekSwitch button").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    selectedWeek=btn.dataset.week;
     render();
     window.scrollTo({top:0,behavior:"smooth"});
   });

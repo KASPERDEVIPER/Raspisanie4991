@@ -6,9 +6,10 @@ body{margin:0;background:linear-gradient(180deg,#07162f 0,#050d1c 40%,#040a15 10
 .brand{display:flex;align-items:center;gap:11px}.brand img{width:44px;height:44px;border-radius:12px}.brand h1{font-size:20px;margin:0;font-weight:750;letter-spacing:-.3px}.brand p{margin:2px 0 0;color:var(--muted);font-size:12px}
 .icon-btn{border:0;background:#10284a;color:#fff;width:42px;height:42px;border-radius:13px;font-size:25px}
 main{max-width:760px;margin:auto;padding:14px 12px 24px}
-.week-panel{background:linear-gradient(145deg,#0d2344,#09172d);border:1px solid #17365d;border-radius:20px;padding:15px;display:flex;justify-content:flex-start;gap:12px;align-items:center;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+.week-panel{background:linear-gradient(145deg,#0d2344,#09172d);border:1px solid #17365d;border-radius:16px;padding:10px 12px;display:flex;justify-content:space-between;gap:10px;align-items:center;box-shadow:0 8px 22px rgba(0,0,0,.16)}
+.week-info{min-width:0}.week-panel .caption{margin-bottom:1px}.week-panel strong{font-size:17px}.week-panel small{display:block;margin-top:1px}
 .caption{display:block;color:var(--muted);font-size:12px;margin-bottom:3px}.week-panel strong{font-size:22px;display:block}.week-panel small{color:#7289a7;font-size:11px}
-.switch{display:flex;background:#061226;padding:3px;border-radius:12px}.switch button{border:0;background:transparent;color:#8196b1;padding:9px 10px;border-radius:9px;font-weight:700;font-size:12px}.switch button.active{background:var(--blue);color:#fff;box-shadow:0 3px 10px rgba(20,118,255,.3)}
+.switch{display:flex;background:#061226;padding:2px;border-radius:10px;flex-shrink:0}.switch button{border:0;background:transparent;color:#8196b1;padding:6px 8px;border-radius:8px;font-weight:700;font-size:10px;min-width:45px}.switch button.active{background:var(--blue);color:#fff;box-shadow:0 3px 8px rgba(20,118,255,.3)}
 .legend{display:flex;align-items:center;gap:6px;color:#91a4bd;font-size:11px;padding:12px 4px}.dot{width:7px;height:7px;border-radius:50%;display:inline-block}.upper-dot{background:var(--blue)}.lower-dot{background:var(--orange);margin-left:8px}.auto{margin-left:auto;color:#607998}
 .day{margin:12px 0 18px}.day-title{display:flex;align-items:center;gap:8px;margin:0 4px 8px}.day-title h2{font-size:17px;margin:0}.day-title span{font-size:11px;color:#6e86a5}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:17px;margin:8px 0;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,.15)}
@@ -18,7 +19,7 @@ main{max-width:760px;margin:auto;padding:14px 12px 24px}
 .now{border-color:#1c76ee;box-shadow:0 0 0 1px rgba(28,118,238,.25),0 8px 24px rgba(0,61,145,.2)}
 footer{text-align:center;color:#506987;font-size:11px;padding:8px 0 25px}
 @media(min-width:600px){main{padding-left:20px;padding-right:20px}.day{margin-bottom:22px}}
-@media(max-width:420px){.week-panel{align-items:flex-start}.switch{flex-direction:column}.switch button{padding:7px 9px}.brand h1{font-size:18px}.lesson-name{font-size:14px}}
+@media(max-width:420px){.week-panel{align-items:center}.brand h1{font-size:18px}.lesson-name{font-size:14px}}
 
 
 .day-selector{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px 12px 2px;max-width:760px;margin:0 auto;}

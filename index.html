@@ -33,18 +33,17 @@
 
 <main>
   <section class="week-panel">
-    <div>
-      <span class="caption">Текущая неделя</span>
+    <div class="week-info">
+      <span class="caption">Неделя</span>
       <strong id="weekName">Верхняя</strong>
       <small id="dateText"></small>
     </div>
+    <div class="switch" id="weekSwitch" aria-label="Выбор недели">
+      <button type="button" data-week="upper">Верх.</button>
+      <button type="button" data-week="lower">Ниж.</button>
+    </div>
   </section>
 
-  <div class="legend">
-    <span class="dot upper-dot"></span> верхняя
-    <span class="dot lower-dot"></span> нижняя
-    <span class="auto">Авто</span>
-  </div>
 
   <section id="schedule"></section>
 </main>
