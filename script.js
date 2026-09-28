@@ -1,388 +1,92 @@
-const scheduleData = {
-    понедельник: [
-        {
-            time: "08:30–10:10",
-            subject: "Основы конфигурирования в корпоративных информационных системах на платформе 1С: Предприятие",
-            teacher: "Варфоломеева П.А.",
-            room: "ауд. 415"
-        },
-        {
-            time: "10:20–12:00",
-            subject: "Технология разработки и защиты баз данных",
-            teacher: "Цымбалюк Л.Н.",
-            room: "ауд. 3319 НовГУ"
-        },
-        {
-            time: "12:45–14:25",
-            subject: "Разработка программных модулей",
-            teacher: "Павлов М.А.",
-            room: "ауд. 408"
-        },
-        {
-            time: "14:35–16:15",
-            subject: "Проектный практикум",
-            teacher: "",
-            room: ""
-        },
-        {
-            time: "16:25–18:05",
-            subject: "",
-            teacher: "",
-            room: ""
-        }
-    ],
+const daysOrder=["понедельник","вторник","среда","четверг","пятница","суббота"];
+const pretty={понедельник:"Понедельник",вторник:"Вторник",среда:"Среда",четверг:"Четверг",пятница:"Пятница",суббота:"Суббота"};
 
-    вторник: [
-        {
-            time: "08:30–10:10",
-            subject: "Иностранный язык в профессиональной деятельности",
-            teacher: "Кручинина О.А.",
-            room: "ауд. 321"
-        },
-        {
-            time: "10:20–12:00",
-            subject: "Технология разработки и защиты баз данных",
-            teacher: "Цымбалюк Л.Н.",
-            room: "ауд. 3319 НовГУ"
-        },
-        {
-            time: "12:45–14:25",
-            subject: "Оформление технической документации",
-            teacher: "Сизова А.Э.",
-            room: "ауд. 404"
-        },
-        {
-            time: "14:35–16:15",
-            parallel: true,
-            lessons: [
-                {
-                    subject: "Разработка мобильных приложений",
-                    teacher: "Шульцев А.В.",
-                    room: "ауд. 3301 НовГУ"
-                },
-                {
-                    subject: "Машинное обучение и большие данные",
-                    teacher: "Филиппов И.И.",
-                    room: "ауд. 3318 НовГУ"
-                }
-            ]
-        },
-        {
-            time: "16:25–18:05",
-            subject: "",
-            teacher: "",
-            room: ""
-        }
-    ],
+// 28.09.2026 — ВЕРХНЯЯ неделя. Каждая следующая неделя переключается автоматически:
+// верхняя → нижняя → верхняя → нижняя и так далее.
+const upperAnchor=new Date(2026,8,28);
 
-    среда: [
-        {
-            time: "08:30–10:10",
-            subject: "",
-            teacher: "",
-            room: ""
-        },
-        {
-            time: "10:20–12:00",
-            subject: "",
-            teacher: "",
-            room: ""
-        },
-        {
-            time: "12:45–14:25",
-            subject: "Разработка программных модулей",
-            teacher: "Павлов М.А.",
-            room: "ауд. 408"
-        },
-        {
-            time: "14:35–16:15",
-            subject: "Разработка мобильных приложений",
-            teacher: "Шульцев А.В.",
-            room: "ауд. 3301 НовГУ"
-        },
-        {
-            time: "16:25–18:05",
-            subject: "Компьютерные сети",
-            teacher: "Андреев И.А.",
-            room: "ауд. 226"
-        }
-    ],
-
-    четверг: [
-        {
-            time: "08:30–10:10",
-            subject: "Компьютерные сети",
-            teacher: "Андреев И.А.",
-            room: "ауд. 226"
-        },
-        {
-            time: "10:20–12:00",
-            subject: "Основы конфигурирования в корпоративных информационных системах на платформе 1С: Предприятие",
-            teacher: "Варфоломеева П.А.",
-            room: "ауд. 415"
-        },
-        {
-            time: "12:45–14:25",
-            subject: "Физическая культура",
-            teacher: "Демченко Д.Л.",
-            room: "СП зал"
-        },
-        {
-            time: "14:35–16:15",
-            parallel: true,
-            lessons: [
-                {
-                    subject: "Технология разработки и защиты баз данных",
-                    teacher: "Цымбалюк Л.Н.",
-                    room: "ауд. 3319 НовГУ"
-                },
-                {
-                    subject: "Разработка программных модулей",
-                    teacher: "Павлов М.А.",
-                    room: "ауд. 408"
-                }
-            ]
-        }
-    ],
-
-    пятница: [
-        {
-            time: "08:30–10:10",
-            subject: "Разработка мобильных приложений",
-            teacher: "Шульцев А.В.",
-            room: "ауд. 3301 НовГУ"
-        },
-        {
-            time: "10:20–12:00",
-            subject: "Основы конфигурирования в корпоративных информационных системах на платформе 1С: Предприятие",
-            teacher: "Варфоломеева П.А.",
-            room: "ауд. 415"
-        },
-        {
-            time: "12:45–14:25",
-            subject: "Оформление технической документации",
-            teacher: "Сизова А.Э.",
-            room: "ауд. 404"
-        },
-        {
-            time: "14:35–16:15",
-            subject: "Машинное обучение и большие данные",
-            teacher: "Филиппов И.И.",
-            room: "ауд. 3318 НовГУ"
-        }
-    ]
-};
-
-const dayNames = [
-    "понедельник",
-    "вторник",
-    "среда",
-    "четверг",
-    "пятница"
-];
-
-const dayShort = {
-    понедельник: "Пн",
-    вторник: "Вт",
-    среда: "Ср",
-    четверг: "Чт",
-    пятница: "Пт"
-};
-
-let selectedDay = getTodayName();
-
-function getTodayName() {
-    const day = new Date().getDay();
-    const map = {
-        1: "понедельник",
-        2: "вторник",
-        3: "среда",
-        4: "четверг",
-        5: "пятница"
-    };
-    return map[day] || "понедельник";
+function getAutoWeek(){
+  const now=new Date();
+  const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  const diff=Math.floor((today-upperAnchor)/86400000);
+  const week=Math.floor(diff/7);
+  return ((week%2+2)%2===0)?"upper":"lower";
 }
 
-function escapeHtml(value) {
-    return String(value || "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+function splitSubject(value){
+  if(!value || value==="----") return {name:"Нет занятий",info:""};
+  const parts=value.split(", ");
+  const name=parts.shift();
+  return {name,info:parts.join(", ")};
 }
+function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
 
-function lessonContent(lesson) {
-    return `
-        <div class="lesson-subject">${escapeHtml(lesson.subject)}</div>
-        ${lesson.teacher ? `<div class="lesson-teacher">${escapeHtml(lesson.teacher)}</div>` : ""}
-        ${lesson.room ? `<div class="lesson-room">${escapeHtml(lesson.room)}</div>` : ""}
-    `;
-}
+let selectedDay=(()=>{
+  const n=new Date().getDay();
+  return n===0?"понедельник":daysOrder[n-1] || "понедельник";
+})();
 
-function renderDays() {
-    const container = document.getElementById("daysScroll");
-    container.innerHTML = "";
+function render(){
+  const week=getAutoWeek();
+  document.getElementById("weekName").textContent=week==="upper"?"Верхняя":"Нижняя";
+  const now=new Date();
+  document.getElementById("dateText").textContent=now.toLocaleDateString("ru-RU",{day:"numeric",month:"long",year:"numeric"});
 
-    dayNames.forEach(day => {
-        const button = document.createElement("button");
-        button.className = "day-button";
-        if (day === selectedDay) button.classList.add("active");
+  document.querySelectorAll("#daySelector button").forEach(btn=>{
+    btn.classList.toggle("active",btn.dataset.day===selectedDay);
+  });
 
-        button.innerHTML = `
-            <span class="day-short">${dayShort[day]}</span>
-            <span class="day-full">${day[0].toUpperCase() + day.slice(1)}</span>
-        `;
+  const root=document.getElementById("schedule");
+  root.innerHTML="";
+  const slots=window.SCHEDULE[selectedDay]||[];
+  const dayEl=document.createElement("section");
+  dayEl.className="day";
+  dayEl.innerHTML=`<div class="day-title"><h2>${pretty[selectedDay]}</h2><span>${slots.length} пар</span></div>`;
 
-        button.addEventListener("click", () => {
-            selectedDay = day;
-            renderDays();
-            renderSchedule();
-        });
-
-        container.appendChild(button);
-    });
-}
-
-function renderSchedule() {
-    const container = document.getElementById("schedule");
-    const lessons = scheduleData[selectedDay] || [];
-
-    container.innerHTML = "";
-
-    lessons.forEach(lesson => {
-        const element = document.createElement("div");
-        element.className = "lesson";
-
-        if (lesson.parallel) {
-            element.innerHTML = `
-                <div class="lesson-time">${lesson.time}</div>
-                <div class="lesson-info parallel-lessons">
-                    ${lesson.lessons.map(item => `
-                        <div class="parallel-item">
-                            ${lessonContent(item)}
-                        </div>
-                    `).join("")}
-                </div>
-            `;
-        } else if (!lesson.subject) {
-            element.classList.add("empty-lesson");
-            element.innerHTML = `
-                <div class="lesson-time">${lesson.time}</div>
-                <div class="lesson-info">
-                    <div class="empty-text">—</div>
-                </div>
-            `;
-        } else {
-            element.innerHTML = `
-                <div class="lesson-time">${lesson.time}</div>
-                <div class="lesson-info">${lessonContent(lesson)}</div>
-            `;
-        }
-
-        container.appendChild(element);
-    });
-
-    if (!lessons.length) {
-        container.innerHTML = `
-            <div class="lesson">
-                <div class="lesson-info">
-                    <div class="empty-text">В этот день занятий нет</div>
-                </div>
-            </div>
-        `;
+  slots.forEach(slot=>{
+    const key=week;
+    const other=week==="upper"?"lower":"upper";
+    const main=splitSubject(slot[key]);
+    const alt=splitSubject(slot[other]);
+    const hasMain=!!slot[key] && slot[key]!=="----";
+    const hasAlt=!!slot[other] && slot[other]!=="----";
+    const card=document.createElement("article");
+    card.className="card";
+    let out=`<div class="time">${escapeHtml(slot.time)}</div>`;
+    if(hasMain){
+      out+=`<div class="lesson"><div class="tag ${key}">${key==="upper"?"Верхняя":"Нижняя"}</div><div class="lesson-name">${escapeHtml(main.name)}</div>${main.info?`<div class="lesson-info">${escapeHtml(main.info)}</div>`:""}</div>`;
+    }else{
+      out+=`<div class="lesson empty">Нет занятий</div>`;
     }
-
-    const prettyDay = selectedDay[0].toUpperCase() + selectedDay.slice(1);
-    document.querySelector("#currentDate span").textContent = prettyDay;
-
-    updateNextLesson();
-}
-
-function updateCurrentTime() {
-    const now = new Date();
-    const hh = String(now.getHours()).padStart(2, "0");
-    const mm = String(now.getMinutes()).padStart(2, "0");
-    document.getElementById("currentTime").textContent = `${hh}:${mm}`;
-}
-
-function updateNextLesson() {
-    const now = new Date();
-    const minutesNow = now.getHours() * 60 + now.getMinutes();
-
-    const times = [
-        ["08:30", "10:10"],
-        ["10:20", "12:00"],
-        ["12:45", "14:25"],
-        ["14:35", "16:15"],
-        ["16:25", "18:05"]
-    ];
-
-    const lessons = scheduleData[selectedDay] || [];
-    let next = null;
-
-    for (let i = 0; i < lessons.length; i++) {
-        const [h, m] = times[i][0].split(":").map(Number);
-        const start = h * 60 + m;
-
-        if (start > minutesNow && (lessons[i].subject || lessons[i].parallel)) {
-            next = start - minutesNow;
-            break;
-        }
+    if(hasAlt){
+      card.classList.add("split");
+      out+=`<div class="lesson"><div class="tag ${other}">${other==="upper"?"Верхняя":"Нижняя"}</div><div class="lesson-name">${escapeHtml(alt.name)}</div>${alt.info?`<div class="lesson-info">${escapeHtml(alt.info)}</div>`:""}</div>`;
     }
-
-    const info = document.getElementById("nextLessonInfo");
-
-    if (next === null) {
-        info.textContent = "Следующая пара: —";
-    } else {
-        const h = Math.floor(next / 60);
-        const m = next % 60;
-
-        if (h > 0) {
-            info.textContent = `Следующая пара: через ${h} ч ${m} мин`;
-        } else {
-            info.textContent = `Следующая пара: через ${m} мин`;
-        }
-    }
+    card.innerHTML=out;
+    dayEl.appendChild(card);
+  });
+  root.appendChild(dayEl);
 }
 
-function showNotification(text) {
-    const notification = document.getElementById("notification");
-    document.getElementById("notificationText").textContent = text;
-    notification.classList.add("show");
-
-    setTimeout(() => {
-        notification.classList.remove("show");
-    }, 2000);
-}
-
-document.getElementById("todayBtn").addEventListener("click", () => {
-    selectedDay = getTodayName();
-    renderDays();
-    renderSchedule();
+document.querySelectorAll("#daySelector button").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    selectedDay=btn.dataset.day;
+    render();
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
 });
 
-document.getElementById("toggleWeek").addEventListener("click", () => {
-    const current = document.getElementById("currentWeek");
-    const next = document.getElementById("nextWeek");
+document.getElementById("refresh").onclick=()=>{render()};
 
-    if (current.textContent === "Верхняя") {
-        current.textContent = "Нижняя";
-        next.textContent = "Верхняя";
-    } else {
-        current.textContent = "Верхняя";
-        next.textContent = "Нижняя";
-    }
+if("serviceWorker" in navigator) window.addEventListener("load",()=>navigator.serviceWorker.register("service-worker.js"));
+render();
 
-    showNotification("Неделя переключена");
-});
-
-renderDays();
-renderSchedule();
-updateCurrentTime();
-
-setInterval(() => {
-    updateCurrentTime();
-    updateNextLesson();
-}, 30000);
+// If the page stays open, reload at the next Monday so the week changes automatically.
+function scheduleWeekRefresh(){
+  const now=new Date();
+  const day=now.getDay();
+  const daysUntilMonday=day===0?1:8-day;
+  const nextMonday=new Date(now.getFullYear(),now.getMonth(),now.getDate()+daysUntilMonday,0,0,1);
+  setTimeout(()=>location.reload(),Math.max(1000,nextMonday-now));
+}
+scheduleWeekRefresh();

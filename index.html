@@ -1,91 +1,56 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Расписание — группа 4991</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07162f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Расписание 4991">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="style.css">
+<title>Расписание — 4991</title>
 </head>
 <body>
-
-<header class="header">
-    <div>
-        <h1>Расписание</h1>
-        <p>Группа 4991 · 2026–2027 учебный год</p>
-    </div>
+<header class="topbar">
+  <div class="brand">
+    <img src="icons/icon-192.png" alt="Логотип">
+    <div><h1>Группа 4991</h1><p>Расписание занятий</p></div>
+  </div>
+  <button id="refresh" class="icon-btn" aria-label="Обновить">↻</button>
 </header>
 
-<main class="container">
 
-    <div class="date-info">
-        <div class="current-date" id="currentDate">
-            <i class="fa-solid fa-calendar-day"></i>
-            <span></span>
-        </div>
-        <button class="today-btn" id="todayBtn">
-            <i class="fa-solid fa-house"></i>
-            Сегодня
-        </button>
+<nav class="day-selector" id="daySelector" aria-label="Дни недели">
+  <button type="button" data-day="понедельник">Пн</button>
+  <button type="button" data-day="вторник">Вт</button>
+  <button type="button" data-day="среда">Ср</button>
+  <button type="button" data-day="четверг">Чт</button>
+  <button type="button" data-day="пятница">Пт</button>
+</nav>
+
+<main>
+  <section class="week-panel">
+    <div>
+      <span class="caption">Текущая неделя</span>
+      <strong id="weekName">Верхняя</strong>
+      <small id="dateText"></small>
     </div>
+  </section>
 
-    <div class="week-info">
-        <div>
-            <div class="week-label">
-                <i class="fa-solid fa-play-circle"></i>
-                Текущая неделя
-            </div>
-            <strong id="currentWeek">Верхняя</strong>
-        </div>
+  <div class="legend">
+    <span class="dot upper-dot"></span> верхняя
+    <span class="dot lower-dot"></span> нижняя
+    <span class="auto">Авто</span>
+  </div>
 
-        <button class="week-toggle" id="toggleWeek">
-            <i class="fa-solid fa-repeat"></i>
-            Сменить
-        </button>
-
-        <div class="next-week">
-            <div class="week-label">
-                <i class="fa-solid fa-forward"></i>
-                Следующая
-            </div>
-            <strong id="nextWeek">Нижняя</strong>
-        </div>
-    </div>
-
-    <div class="days-scroll-container">
-        <div class="days-scroll" id="daysScroll"></div>
-        <div class="scroll-hint">
-            <i class="fa-solid fa-arrows-left-right"></i>
-            Листайте
-        </div>
-    </div>
-
-    <div class="filter-bar">
-        <div class="active-subgroup">
-            <i class="fa-solid fa-user-group"></i>
-            <span>Группа 4991</span>
-        </div>
-    </div>
-
-    <section class="schedule-container">
-        <div id="schedule"></div>
-    </section>
-
-    <div class="time-indicator">
-        <div class="current-time">
-            <i class="fa-regular fa-clock"></i>
-            <span id="currentTime">00:00</span>
-        </div>
-        <div id="nextLessonInfo">Следующая пара: —</div>
-    </div>
-
+  <section id="schedule"></section>
 </main>
 
-<div class="notification" id="notification">
-    <i class="fa-solid fa-bell"></i>
-    <span id="notificationText"></span>
-</div>
-
+<footer>4991 · 2026–2027 · 1 семестр</footer>
+<script>window.SCHEDULE = {"понедельник":[{"time":"8.30-10.10","upper":"Основы конфигурирования в корпоративных информационных системах на платформе 1С: Предприятие, Варфоломеева П.А., ауд.415","lower":""},{"time":"10.20-12.00","upper":"Технология разработки и защиты баз данных, Цымбалюк Л.Н., ауд.3319 НовГУ","lower":""},{"time":"12.45-14.25","upper":"Разработка программных модулей, Павлов М.А., ауд.403","lower":""},{"time":"14.35-16.15","upper":"","lower":"Разработка мобильных приложений, Шульцев А.В., ауд.3301 НовГУ"},{"time":"16.25-18.05","upper":"","lower":"Разработка мобильных приложений, Шульцев А.В., ауд.3301 НовГУ"}],"вторник":[{"time":"8.30-10.10","upper":"Иностранный язык в профессиональной деятельности, Кручинина О.А., ауд.321","lower":""},{"time":"10.20-12.00","upper":"Технология разработки и защиты баз данных, Цымбалюк Л.Н., ауд.3319 НовГУ","lower":""},{"time":"12.45-14.25","upper":"Оформление технической документации, Сизова А.Э., ауд.404","lower":""},{"time":"14.35-16.15","upper":"Разработка мобильных приложений, Шульцев А.В., ауд.3301 НовГУ","lower":"Машинное обучение и большие данные, Филиппов И.И., ауд.3318 НовГУ"}],"среда":[{"time":"8.30-10.10","upper":"----","lower":""},{"time":"10.20-12.00","upper":"----","lower":""},{"time":"12.45-14.25","upper":"Разработка программных модулей, Павлов М.А., ауд.408","lower":""},{"time":"14.35-16.15","upper":"Разработка мобильных приложений, Шульцев А.В., ауд.3301 НовГУ","lower":""},{"time":"16.25-18.05","upper":"Компьютерные сети, Адреев И.А., ауд.226","lower":""}],"четверг":[{"time":"8.30-10.10","upper":"Компьютерные сети, Адреев И.А., ауд.226","lower":""},{"time":"10.20-12.00","upper":"Основы конфигурирования в корпоративных информационных системах на платформе 1С: Предприятие, Варфоломеева П.А., ауд.415","lower":""},{"time":"12.45-14.25","upper":"Физическая культура, Демченко Д.Л., СП зал","lower":""},{"time":"14.35-16.15","upper":"Технология разработки и защиты баз данных, Цымбалюк Л.Н., ауд.3319 НовГУ","lower":"Разработка программных модулей, Павлов М.А., ауд.408"},{"time":"16.25-18.05","upper":"","lower":""}],"пятница":[{"time":"8.30-10.10","upper":"Машинное обучение и большие данные, Филиппов И.И., ауд.3318 НовГУ","lower":""},{"time":"10.20-12.00","upper":"Основы конфигурирования в корпоративных информационных системах на платформе 1С: Предприятие, Варфоломеева П.А., ауд.415","lower":""},{"time":"12.45-14.25","upper":"Оформление технической документации, Сизова А.Э., ауд.404","lower":""},{"time":"14.35-16.15","upper":"","lower":""},{"time":"16.25-18.05","upper":"","lower":""}],"суббота":[{"time":"8.30-10.10","upper":"Проектный практикум","lower":""},{"time":"10.20-12.00","upper":"","lower":""},{"time":"12.45-14.25","upper":"","lower":""},{"time":"14.35-16.15","upper":"","lower":""}]};</script>
 <script src="script.js"></script>
 </body>
 </html>
